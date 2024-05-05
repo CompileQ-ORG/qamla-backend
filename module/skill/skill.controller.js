@@ -1,9 +1,9 @@
-const db = require("../config/db")
+const db = require("../../config/db")
 
-//get all students list
-const getStudents = async (req, res) => {
+//get all job categories
+const getAllSkill = async (req, res) => {
     try {
-        const data = await db.query("SELECT * FROM students");
+        const data = await db.query("SELECT * FROM skill");
 
         if (!data) {
             return res.status(404).send({
@@ -13,32 +13,32 @@ const getStudents = async (req, res) => {
         }
         res.status(200).send({
             success: true,
-            message: 'All Students Records',
-            totalStudents: data[0].length,
+            message: 'All skill Records',
+            totalSkills: data[0].length,
             data: data[0]
         })
     } catch (error) {
         console.log(error)
         res.status(500).send({
             success: false,
-            message: "Error in Get All Student API",
+            message: "Error in Get All skill",
             error
         })
     }
 }
 
-//get student by id
-const getStudentById = async (req, res) => {
+//get single job category
+const getSingleSkill = async (req, res) => {
     try {
-        const studentId = req.params.id
-        if (!studentId) {
+        const id = req.params.id
+        if (!id) {
             return res.status(404).send({
                 success: false,
-                message: "Invalid provide student id"
+                message: "Invalid provide job category id"
             })
         }
 
-        const data = await db.query(`SELECT * FROM students WHERE id = ?`, [studentId])
+        const data = await db.query(`SELECT * FROM skill WHERE id = ?`, [id])
 
         if (!data) {
             return res.status(404).send({
@@ -49,31 +49,32 @@ const getStudentById = async (req, res) => {
 
         res.status(200).send({
             success: true,
-            studentDetails: data[0]
+            jobCategoryDetails: data[0]
         })
     } catch (error) {
         console.log(error)
         res.status(500).send({
             success: false,
-            message: "Error in get student by id api",
+            message: "Error in get job category by id",
             error
         })
     }
 }
 
 //create stud4ent || post
-const createStudent = async (req, res) => {
+const createSkill = async (req, res) => {
     try {
-        const { name, roll_no, medium, fees } = req.body
+        const { title, createdBy } = req.body
 
-        if (!name || !roll_no || !medium || !fees) {
+        if (!title || !createdBy) {
             return res.status(500).send({
                 success: false,
                 message: "Please provide all fields"
             })
         }
 
-        const data = await db.query(`INSERT INTO students (name, roll_no, fees, medium) VALUES (?, ?, ?, ?)`, [name, roll_no, fees, medium])
+        const data = await db.query(`INSERT INTO skill (title, createdBy) VALUES (?, ?)`,
+            [title, createdBy])
 
         if (!data) {
             return res.status(500).send({
@@ -84,33 +85,32 @@ const createStudent = async (req, res) => {
 
         res.status(201).send({
             success: true,
-            message: "New student Record Created"
+            message: "New skill record created successfully"
         })
     } catch (error) {
         console.log(error)
         res.status(500).send({
             success: false,
-            message: "Error in create student api",
+            message: "Error in create skill record",
             error
         })
     }
 }
 
-//update student record by id
-const updateStudent = async (req, res) => {
+const updateSkill = async (req, res) => {
     try {
-        const studentId = req.params.id;
+        const id = req.params.id;
 
-        if (!studentId) {
+        if (!id) {
             return res.status(404).send({
                 success: false,
                 message: "Invalid ID"
             })
         }
 
-        const { name, roll_no, fees, medium } = req.body
+        const { title, createdBy } = req.body
 
-        const data = db.query(`UPDATE students SET name  = ?, roll_no = ?, fees = ?, medium = ? WHERE id = ?`, [name, roll_no, fees, medium, studentId])
+        const data = db.query(`UPDATE skill SET title  = ?, createdBy = ? WHERE id = ?`, [title, createdBy, id])
 
         if (!data) {
             return res.status(500).send({
@@ -121,50 +121,72 @@ const updateStudent = async (req, res) => {
 
         res.status(200).send({
             success: true,
-            message: "Student details updated successfully"
+            message: "skill updated successfully"
         })
 
     } catch (error) {
         console.log(error)
         res.status(500).send({
             success: false,
-            message: "Error in update student API",
+            message: "Error in update skill",
             error
         })
     }
 }
 
-//delete student
-const deleteStudent = async (req, res) => {
+const deleteSkill = async (req, res) => {
     try {
-        const studentId = req.params.id
-        if (!studentId) {
+        const id = req.params.id;
+
+        if (!id) {
             return res.status(404).send({
                 success: false,
-                message: "Please provide student id or valid student id"
+                message: "Invalid ID"
             })
         }
 
-        await db.query(`DELETE FROM students WHERE id=?`, [studentId])
+        const data = await db.query(`SELECT * FROM skill WHERE id = ?`, [id])
+
+        if (!data) {
+            return res.status(404).send({
+                success: false,
+                message: "No Records Found"
+            })
+        }
+
+        const isDeleted = 1
+
+        const updatedData = db.query(`UPDATE skill SET isDeleted  = ? WHERE id = ?`, [isDeleted, id])
+
+        if (!updatedData) {
+            return res.status(500).send({
+                success: false,
+                message: "Error in delete data"
+            })
+        }
+
+        console.log(updatedData)
 
         res.status(200).send({
             success: true,
-            message: "Student deleted successfully"
+            message: "Skill deleted successfully"
         })
+
     } catch (error) {
         console.log(error)
         res.status(500).send({
             success: false,
-            message: "Error in delete student API",
+            message: "Error in delete skill",
             error
         })
     }
 }
 
+
 module.exports = {
-    getStudents,
-    getStudentById,
-    createStudent,
-    updateStudent,
-    deleteStudent
+    createSkill,
+    updateSkill,
+    deleteSkill,
+    getSingleSkill,
+    getAllSkill
 }
