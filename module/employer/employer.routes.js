@@ -1,5 +1,5 @@
 const express = require('express');
-const { getAllEmployers, getSingleEmployer, createEmployer, updateEmployer, deleteEmployer } = require('./employer.controller');
+const { getAllEmployers, getSingleEmployer, createEmployer, updateEmployer, deleteEmployer, login } = require('./employer.controller');
 
 //router object
 const router = express.Router();
@@ -20,5 +20,11 @@ router.patch('updateE/:id', updateEmployer);
 
 //delete category || patch
 router.patch('/delete/:id', deleteEmployer);
+
+//registration of a employer
+router.post('/register', createEmployer)
+
+//login of a employer
+router.post('/login', login)
 
 module.exports = router;

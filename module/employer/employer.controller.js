@@ -1,4 +1,6 @@
 const { response } = require("express");
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 const db = require("../../config/db")
 
 //get all job categories
@@ -83,65 +85,59 @@ const createEmployer = async (req, res) => {
         // res.json('hellloooo!!')
         // res.json(req.body)
 
-        if (!firstName || !lastName || !middleName || !email || !password ||
-
-            !photo || !addressLine1 || !addressLine2 || !postCode || !city ||
-
-            !stateOrProvince || !country || !primaryPhone || !secondaryPhone || !gender ||
-
-            !companyName || !companySize || !industryType || !documents || !isVerified ||
-
-            !companyAddressLine1 || !companyAddressLine2 || !companyPostCode || !companyCity || !companyStateOrProvince ||
-
-            !companyCountry || !isDeleted || !createdBy) {
+        if (!firstName || !lastName || !email || !password) {
             return res.status(500).send({
                 success: false,
                 message: "Please provide all fields"
             })
         }
 
-        const data = await db.query(`INSERT INTO employer 
-        ( firstName, lastName, middleName, email, password,
-            
-            photo, addressLine1, addressLine2, postCode, city,
-            
-            stateOrProvince, country, primaryPhone, secondaryPhone, gender,
-            
-            companyName, companySize, industryType, documents, isVerified,
-            
-            companyAddressLine1, companyAddressLine2, companyPostCode, companyCity, companyStateOrProvince,
-            
-            companyCountry, isDeleted, createdBy) 
-            VALUES
-            (?, ?, ?, ?, ?, ?, ?, ?, ?, ?,
-
-                ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,
-
-                ?, ?, ?, ?, ?, ?, ?, ?)`,
-
-            [firstName, lastName, middleName, email, password,
-
+        bcrypt.hash(password, saltRounds, async function (err, hash) {
+            const data = await db.query(`INSERT INTO employer 
+            ( firstName, lastName, middleName, email, password,
+                
                 photo, addressLine1, addressLine2, postCode, city,
-
+                
                 stateOrProvince, country, primaryPhone, secondaryPhone, gender,
-
+                
                 companyName, companySize, industryType, documents, isVerified,
-
+                
                 companyAddressLine1, companyAddressLine2, companyPostCode, companyCity, companyStateOrProvince,
+                
+                companyCountry, isDeleted, createdBy) 
+                VALUES
+                (?, ?, ?, ?, ?, ?, ?, ?, ?, ?,
+    
+                    ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,
+    
+                    ?, ?, ?, ?, ?, ?, ?, ?)`,
 
-                companyCountry, isDeleted, createdBy])
+                [firstName, lastName, middleName, email, hash,
 
-        if (!data) {
-            return res.status(500).send({
-                success: false,
-                message: "Error in INSERT QUERY"
+                    photo, addressLine1, addressLine2, postCode, city,
+
+                    stateOrProvince, country, primaryPhone, secondaryPhone, gender,
+
+                    companyName, companySize, industryType, documents, isVerified,
+
+                    companyAddressLine1, companyAddressLine2, companyPostCode, companyCity, companyStateOrProvince,
+
+                    companyCountry, isDeleted, createdBy])
+
+            if (!data) {
+                return res.status(500).send({
+                    success: false,
+                    message: "Error in INSERT QUERY"
+                })
+            }
+
+            res.status(201).send({
+                success: true,
+                message: "New employer record created successfully"
             })
-        }
-
-        res.status(201).send({
-            success: true,
-            message: "New employer record created successfully"
         })
+
+
     } catch (error) {
         console.log(error)
         res.status(500).send({
@@ -276,10 +272,71 @@ const deleteEmployer = async (req, res) => {
     }
 }
 
+//employer login //post
+const login = async (req, res) => {
+
+    try {
+        const { email, password } = req.body
+
+        if (!email || !password) {
+            return res.status(500).send({
+                success: false,
+                message: "Please provide all fields"
+            })
+        }
+
+        const data = await db.query(`SELECT * FROM employer where email = ?`, [email])
+
+        if (!data) {
+            return res.status(500).send({
+                success: false,
+                message: "Email or Password incorrect!"
+            })
+        }
+
+        const dbpass = data[0][0].password;
+
+        bcrypt.compare(password, dbpass, function (err, result) {
+
+            try {
+                if (result) {
+                    res.status(200).send({
+                        success: result,
+                        message: 'employer login successful'
+                    })
+                } else {
+                    res.status(404).send({
+                        success: result,
+                        message: 'employer login failed!'
+                    })
+                }
+            }
+            catch (error) {
+                res.status(404).send({
+                    success: false,
+                    message: 'employer not found'
+                })
+            }
+
+        });
+
+
+
+    } catch (error) {
+        console.log(error)
+        res.status(500).send({
+            success: false,
+            message: "Error in candidate login",
+            error
+        })
+    }
+}
+
 module.exports = {
     createEmployer,
     updateEmployer,
     deleteEmployer,
     getSingleEmployer,
-    getAllEmployers
+    getAllEmployers,
+    login
 }
