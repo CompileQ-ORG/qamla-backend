@@ -17,6 +17,7 @@ app.use(morgan("dev"))
 //routes
 // app.use("/api/v1/student", require("./routes/students.Routes"))
 
+//api starters
 app.use("/api/v1/jobcategory", require("./module/jobCategory/jobCategory.routes"))
 app.use("/api/v1/skill", require("./module/skill/skill.routes"))
 app.use("/api/v1/language", require("./module/language/language.routes"))

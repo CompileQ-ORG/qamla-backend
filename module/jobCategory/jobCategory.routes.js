@@ -11,15 +11,15 @@ const router = express.Router();
 router.get('/', getAllJobCategories)
 
 //get single job category by id || get
-router.get('/singlejobcategory/:id', getSingleJobCategory)
+router.get('/:id', getSingleJobCategory)
 
 //create category || post
 router.post('/createcategory', createJobCategory);
 
 //update category || put
-router.put('/update/:id', updateJobCategory);
+router.put('/:id', updateJobCategory);
 
 //delete category || patch
-router.patch('/delete/:id', deleteJobCategory);
+router.patch('/:id', deleteJobCategory);
 
 module.exports = router;

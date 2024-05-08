@@ -15,10 +15,10 @@ router.get('/:id', getSingleEmployer)
 router.post('/create', createEmployer);
 
 //update employers || put
-router.patch('updateE/:id', updateEmployer);
+router.patch('/:id', updateEmployer);
 
 //delete employers || patch
-router.patch('/delete/:id', deleteEmployer);
+router.patch('/:id', deleteEmployer);
 
 //registration of a employer
 router.post('/register', createEmployer)
