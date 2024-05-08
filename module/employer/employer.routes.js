@@ -4,21 +4,20 @@ const { getAllEmployers, getSingleEmployer, createEmployer, updateEmployer, dele
 //router object
 const router = express.Router();
 
-//all routes here
 
-//get all job categories //get
+//get all employers //get
 router.get('/', getAllEmployers)
 
-//get single job category by id || get
+//get single employers by id || get
 router.get('/:id', getSingleEmployer)
 
-//create category || post
+//create employers || post
 router.post('/create', createEmployer);
 
-//update category || put
+//update employers || put
 router.patch('updateE/:id', updateEmployer);
 
-//delete category || patch
+//delete employers || patch
 router.patch('/delete/:id', deleteEmployer);
 
 //registration of a employer

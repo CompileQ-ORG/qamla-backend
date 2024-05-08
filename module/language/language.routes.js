@@ -1,7 +1,5 @@
 const express = require('express');
-// const { createJobCategory, updateJobCategory, deleteJobCategory, getSingleJobCategory, getAllJobCategories } =
-//     require('./jobCategory.controller');
-// const { createSkill, getSingleSkill, getAllSkill, updateSkill, deleteSkill } = require('./skill.controller');
+
 const { createLanguage, getAllLanguage, getSingleLanguage, updateLanguage, deleteLanguage } = require('./language.controller');
 
 //router object

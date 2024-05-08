@@ -1,10 +1,8 @@
 const db = require("../../config/db")
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
-const myPlaintextPassword = 's0/\/\P4$$w0rD';
-const someOtherPlaintextPassword = 'not_bacon';
 
-//get all job candidates
+//get all candidates
 const getAllCandidate = async (req, res) => {
     try {
         const data = await db.query("SELECT * FROM candidate");
@@ -31,7 +29,7 @@ const getAllCandidate = async (req, res) => {
     }
 }
 
-// get single job candidate
+// get single candidate //get
 const getSingleCandidate = async (req, res) => {
     try {
         const id = req.params.id
@@ -59,7 +57,7 @@ const getSingleCandidate = async (req, res) => {
         console.log(error)
         res.status(500).send({
             success: false,
-            message: "Error in get job category by id",
+            message: "Error in get single candidate by id",
             error
         })
     }
@@ -161,7 +159,7 @@ const updateCandidate = async (req, res) => {
         console.log(error)
         res.status(500).send({
             success: false,
-            message: "Error in update skill",
+            message: "Error in update candidate",
             error
         })
     }

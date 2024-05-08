@@ -24,6 +24,7 @@ app.use("/api/v1/employer", require("./module/employer/employer.routes"))
 app.use("/api/v1/course", require("./module/courseOrCertificate/courseOrCertificate.routes"))
 app.use("/api/v1/user", require("./module/user/user.routes"))
 app.use("/api/v1/candidate", require("./module/candidate/candidate.routes"))
+app.use("/api/v1/job", require("./module/job/job.routes"))
 
 // routes
 app.get("/test", (req, res) => {

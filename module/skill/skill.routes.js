@@ -1,6 +1,5 @@
 const express = require('express');
-// const { createJobCategory, updateJobCategory, deleteJobCategory, getSingleJobCategory, getAllJobCategories } =
-//     require('./jobCategory.controller');
+
 const { createSkill, getSingleSkill, getAllSkill, updateSkill, deleteSkill } = require('./skill.controller');
 
 //router object
@@ -20,7 +19,7 @@ router.post('/createskill', createSkill);
 //update skill || put
 router.put('/:id', updateSkill);
 
-//delete category || patch
+//delete skill || patch
 router.patch('/:id', deleteSkill);
 
 module.exports = router;

@@ -1,9 +1,9 @@
 const db = require("../../config/db")
 
-//get all job categories
-const getAllSkill = async (req, res) => {
+//get all jobs
+const getAllJobs = async (req, res) => {
     try {
-        const data = await db.query("SELECT * FROM skill");
+        const data = await db.query("SELECT * FROM job");
 
         if (!data) {
             return res.status(404).send({
@@ -13,7 +13,7 @@ const getAllSkill = async (req, res) => {
         }
         res.status(200).send({
             success: true,
-            message: 'All skill Records',
+            message: 'All jobs Records',
             totalSkills: data[0].length,
             data: data[0]
         })
@@ -21,24 +21,24 @@ const getAllSkill = async (req, res) => {
         console.log(error)
         res.status(500).send({
             success: false,
-            message: "Error in Get All skill",
+            message: "Error in Get All job",
             error
         })
     }
 }
 
-//get single job category
-const getSingleSkill = async (req, res) => {
+//get single job  //get
+const getSingleJob = async (req, res) => {
     try {
         const id = req.params.id
         if (!id) {
             return res.status(404).send({
                 success: false,
-                message: "Invalid provide job category id"
+                message: "Invalid provide id"
             })
         }
 
-        const data = await db.query(`SELECT * FROM skill WHERE id = ?`, [id])
+        const data = await db.query(`SELECT * FROM job WHERE employerId = ?`, [id])
 
         if (!data) {
             return res.status(404).send({
@@ -61,20 +61,20 @@ const getSingleSkill = async (req, res) => {
     }
 }
 
-//create stud4ent || post
-const createSkill = async (req, res) => {
+//create Job || post
+const createJob = async (req, res) => {
     try {
-        const { title, createdBy } = req.body
+        const { jobCategory, jobTitle, salary, vacancy, jobLocation, jobType, educationalRequirement, experienceRequirement,
 
-        if (!title || !createdBy) {
-            return res.status(500).send({
-                success: false,
-                message: "Please provide all fields"
-            })
-        }
+            additionalRequirement, responsibilities, compensationsAndBenefits, skills, employmentStatus, createdBy
+        } = req.body
 
-        const data = await db.query(`INSERT INTO skill (title, createdBy) VALUES (?, ?)`,
-            [title, createdBy])
+        const data = await db.query(`INSERT INTO job (jobCategory, jobTitle, salary, vacancy, jobLocation, jobType, educationalRequirement, experienceRequirement,
+
+            additionalRequirement, responsibilities, compensationsAndBenefits, skills, employmentStatus, createdBy) VALUES (?, ?,?, ?,?, ?,?, ?,?, ?,?, ?,?, ? )`,
+            [jobCategory, jobTitle, salary, vacancy, jobLocation, jobType, educationalRequirement, experienceRequirement,
+
+                additionalRequirement, responsibilities, compensationsAndBenefits, skills, employmentStatus, createdBy])
 
         if (!data) {
             return res.status(500).send({
@@ -85,19 +85,20 @@ const createSkill = async (req, res) => {
 
         res.status(201).send({
             success: true,
-            message: "New skill record created successfully"
+            message: "New job record created successfully"
         })
     } catch (error) {
         console.log(error)
         res.status(500).send({
             success: false,
-            message: "Error in create skill record",
+            message: "Error in create job record",
             error
         })
     }
 }
 
-const updateSkill = async (req, res) => {
+//update job || put
+const updateJob = async (req, res) => {
     try {
         const id = req.params.id;
 
@@ -108,9 +109,17 @@ const updateSkill = async (req, res) => {
             })
         }
 
-        const { title, createdBy } = req.body
+        const { jobCategory, jobTitle, salary, vacancy, jobLocation, jobType, educationalRequirement, experienceRequirement,
 
-        const data = db.query(`UPDATE skill SET title  = ?, createdBy = ? WHERE id = ?`, [title, createdBy, id])
+            additionalRequirement, responsibilities, compensationsAndBenefits, skills, employmentStatus, createdBy } = req.body
+
+        const data = db.query(`UPDATE job SET 
+        jobCategory= ?, jobTitle= ?, salary= ?, vacancy= ?, jobLocation= ?, jobType= ?, educationalRequirement= ?, experienceRequirement= ?,
+
+        additionalRequirement= ?, responsibilities= ?, compensationsAndBenefits= ?, skills= ?, employmentStatus= ?, createdBy= ?
+        WHERE employerId = ?`, [jobCategory, jobTitle, salary, vacancy, jobLocation, jobType, educationalRequirement, experienceRequirement,
+
+            additionalRequirement, responsibilities, compensationsAndBenefits, skills, employmentStatus, createdBy, id])
 
         if (!data) {
             return res.status(500).send({
@@ -121,20 +130,21 @@ const updateSkill = async (req, res) => {
 
         res.status(200).send({
             success: true,
-            message: "skill updated successfully"
+            message: "job updated successfully"
         })
 
     } catch (error) {
         console.log(error)
         res.status(500).send({
             success: false,
-            message: "Error in update skill",
+            message: "Error in update job",
             error
         })
     }
 }
 
-const deleteSkill = async (req, res) => {
+//delete job || patch
+const deleteJob = async (req, res) => {
     try {
         const id = req.params.id;
 
@@ -145,7 +155,7 @@ const deleteSkill = async (req, res) => {
             })
         }
 
-        const data = await db.query(`SELECT * FROM skill WHERE id = ?`, [id])
+        const data = await db.query(`SELECT * FROM job WHERE employerId = ?`, [id])
 
         if (!data) {
             return res.status(404).send({
@@ -156,7 +166,7 @@ const deleteSkill = async (req, res) => {
 
         const isDeleted = 1
 
-        const updatedData = db.query(`UPDATE skill SET isDeleted  = ? WHERE id = ?`, [isDeleted, id])
+        const updatedData = db.query(`UPDATE job SET isDeleted  = ? WHERE employerId = ?`, [isDeleted, id])
 
         if (!updatedData) {
             return res.status(500).send({
@@ -169,24 +179,23 @@ const deleteSkill = async (req, res) => {
 
         res.status(200).send({
             success: true,
-            message: "Skill deleted successfully"
+            message: "Job deleted successfully"
         })
 
     } catch (error) {
         console.log(error)
         res.status(500).send({
             success: false,
-            message: "Error in delete skill",
+            message: "Error in delete job",
             error
         })
     }
 }
 
-
 module.exports = {
-    createSkill,
-    updateSkill,
-    deleteSkill,
-    getSingleSkill,
-    getAllSkill
+    createJob,
+    updateJob,
+    deleteJob,
+    getAllJobs,
+    getSingleJob
 }

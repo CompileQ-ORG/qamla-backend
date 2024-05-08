@@ -1,6 +1,6 @@
 const db = require("../../config/db")
 
-//get all job categories
+//get all users
 const getAllUser = async (req, res) => {
     try {
         const data = await db.query("SELECT * FROM user");
@@ -29,14 +29,14 @@ const getAllUser = async (req, res) => {
     }
 }
 
-//get single job category
+//get single user //get
 const getSingleUser = async (req, res) => {
     try {
         const id = req.params.id
         if (!id) {
             return res.status(404).send({
                 success: false,
-                message: "Invalid provide job user id"
+                message: "Invalid provide user id"
             })
         }
 
@@ -57,13 +57,13 @@ const getSingleUser = async (req, res) => {
         console.log(error)
         res.status(500).send({
             success: false,
-            message: "Error in get job category by id",
+            message: "Error in user by id",
             error
         })
     }
 }
 
-//create stud4ent || post
+//create user || post
 const createUser = async (req, res) => {
     try {
         const { firstName, lastName, email, password, phone, createdBy, isDeleted } = req.body;
@@ -102,7 +102,7 @@ const createUser = async (req, res) => {
     }
 };
 
-
+//update a user
 const updateUser = async (req, res) => {
     try {
         const id = req.params.id;
@@ -127,19 +127,20 @@ const updateUser = async (req, res) => {
 
         res.status(200).send({
             success: true,
-            message: "skill updated successfully"
+            message: "user updated successfully"
         })
 
     } catch (error) {
         console.log(error)
         res.status(500).send({
             success: false,
-            message: "Error in update skill",
+            message: "Error in update user",
             error
         })
     }
 }
 
+//delete a user
 const deleteUser = async (req, res) => {
     try {
         const id = req.params.id;
@@ -175,14 +176,14 @@ const deleteUser = async (req, res) => {
 
         res.status(200).send({
             success: true,
-            message: "Skill deleted successfully"
+            message: "user deleted successfully"
         })
 
     } catch (error) {
         console.log(error)
         res.status(500).send({
             success: false,
-            message: "Error in delete skill",
+            message: "Error in delete user",
             error
         })
     }

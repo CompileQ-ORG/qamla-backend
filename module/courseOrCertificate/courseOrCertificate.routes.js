@@ -8,21 +8,20 @@ const { getAllCourse,
 //router object
 const router = express.Router();
 
-//all routes here
 
-//get all languages //get
+//get all training and certifications //get
 router.get('/', getAllCourse)
 
-//get single language by id || get
+//get single training and certifications by id || get
 router.get('/:id', getSingleCourse)
 
-//create category || post
+//create training and certifications || post
 router.post('/createcourse', createCourse);
 
-//update language || put
+//update training and certifications || put
 router.put('/:id', updateCourse);
 
-//delete language || patch
+//delete training and certifications || patch
 router.patch('/:id', deleteCourse);
 
 module.exports = router;

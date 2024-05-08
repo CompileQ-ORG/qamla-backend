@@ -61,7 +61,7 @@ const getSingleJobCategory = async (req, res) => {
     }
 }
 
-//create stud4ent || post
+//create category || post
 const createJobCategory = async (req, res) => {
     try {
         const { title, image, description, createdBy } = req.body
@@ -97,6 +97,7 @@ const createJobCategory = async (req, res) => {
     }
 }
 
+//update job category //put
 const updateJobCategory = async (req, res) => {
     try {
         const id = req.params.id;
@@ -134,6 +135,7 @@ const updateJobCategory = async (req, res) => {
     }
 }
 
+//delete job category //patch
 const deleteJobCategory = async (req, res) => {
     try {
         const id = req.params.id;

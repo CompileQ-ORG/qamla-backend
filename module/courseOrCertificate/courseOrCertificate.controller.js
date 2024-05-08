@@ -1,6 +1,6 @@
 const db = require("../../config/db")
 
-//get all job categories
+//get all training and certifications
 const getAllCourse = async (req, res) => {
     try {
         const data = await db.query("SELECT * FROM trainingandcertification");
@@ -13,7 +13,7 @@ const getAllCourse = async (req, res) => {
         }
         res.status(200).send({
             success: true,
-            message: 'All course Records',
+            message: 'All training and certifications Records',
             totalSkills: data[0].length,
             data: data[0]
         })
@@ -21,13 +21,13 @@ const getAllCourse = async (req, res) => {
         console.log(error)
         res.status(500).send({
             success: false,
-            message: "Error in get course",
+            message: "Error in get training and certifications",
             error
         })
     }
 }
 
-//get single job category
+//get single training and certifications
 const getSingleCourse = async (req, res) => {
     try {
         const id = req.params.id
@@ -55,13 +55,13 @@ const getSingleCourse = async (req, res) => {
         console.log(error)
         res.status(500).send({
             success: false,
-            message: "Error in get course by id",
+            message: "Error in get training and certifications by id",
             error
         })
     }
 }
 
-//create stud4ent || post
+//create training and certifications || post
 const createCourse = async (req, res) => {
     try {
         const { courseOrCertification, issuingOrganization, completionMonth, completionYear, isDeleted, createdBy } = req.body
@@ -79,70 +79,26 @@ const createCourse = async (req, res) => {
         if (!data) {
             return res.status(500).send({
                 success: false,
-                message: "Error in INSERT Course or Certification"
+                message: "Error in INSERT training and certifications"
             })
         }
 
         res.status(201).send({
             success: true,
-            message: "New course or certificate record created successfully"
+            message: "New training and certifications created successfully"
         })
     } catch (error) {
         console.log(error)
         res.status(500).send({
             success: false,
-            message: "Error in create course record",
+            message: "Error in create training and certifications",
             error
         })
     }
 }
 
-// const updateCourse = async (req, res) => {
-//     try {
-//         const id = req.params.id;
 
-//         if (!id) {
-//             return res.status(404).send({
-//                 success: false,
-//                 message: "Invalid ID"
-//             })
-//         }
-
-//         const { courseOrCertification, issuingOrganization, completionMonth, completionYear, isDeleted, createdBy } = req.body
-
-//         const data = db.query(`UPDATE trainingandcertification 
-//         SET courseOrCertification = ?, issuingOrganization = ?, completionMonth = ?, completionYear = ?, isDeleted = ?, createdBy = ? 
-//         WHERE id = ?
-//         `, [courseOrCertification, issuingOrganization, completionMonth, completionYear, isDeleted, createdBy, id])
-
-//         if (!data) {
-//             return res.status(500).send({
-//                 success: false,
-//                 message: "Error in update data"
-//             })
-//         }
-
-//         res.status(200).send({
-//             success: true,
-//             message: `course updated successfully!!!!! ${id}`,
-//             a: `${courseOrCertification}`,
-//             b: `${issuingOrganization}`,
-//             c: `${completionMonth}`,
-//             d: `${completionYear}`,
-//             e: `${isDeleted}`,
-//             f: `${createdBy}`,
-//         })
-
-//     } catch (error) {
-//         console.log(error)
-//         res.status(500).send({
-//             success: false,
-//             message: "Error in update course",
-//             error
-//         })
-//     }
-// }
-
+//update training and certifications ||put
 const updateCourse = async (req, res) => {
     try {
         const id = req.params.id;
@@ -167,20 +123,20 @@ const updateCourse = async (req, res) => {
 
         res.status(200).send({
             success: true,
-            message: `Course updated successfully!!!!! ${id}`
+            message: `Training and certifications updated successfully!!!!! ${id}`
         });
 
     } catch (error) {
         console.log(error);
         res.status(500).send({
             success: false,
-            message: "Error in updating course",
+            message: "Error in updating training and certifications",
             error
         });
     }
 };
 
-
+// delete training and certifications || patch
 const deleteCourse = async (req, res) => {
     try {
         const id = req.params.id;
@@ -216,14 +172,14 @@ const deleteCourse = async (req, res) => {
 
         res.status(200).send({
             success: true,
-            message: "course deleted successfully"
+            message: "Training and Certifications deleted successfully"
         })
 
     } catch (error) {
         console.log(error)
         res.status(500).send({
             success: false,
-            message: "Error in delete skill",
+            message: "Error in delete training and certifications",
             error
         })
     }

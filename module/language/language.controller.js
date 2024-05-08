@@ -1,6 +1,6 @@
 const db = require("../../config/db")
 
-//get all job categories
+//get all languages
 const getAllLanguage = async (req, res) => {
     try {
         const data = await db.query("SELECT * FROM language");
@@ -21,13 +21,13 @@ const getAllLanguage = async (req, res) => {
         console.log(error)
         res.status(500).send({
             success: false,
-            message: "Error in Get All skill",
+            message: "Error in Get All languages",
             error
         })
     }
 }
 
-//get single job category
+//get single languages
 const getSingleLanguage = async (req, res) => {
     try {
         const id = req.params.id
@@ -55,13 +55,13 @@ const getSingleLanguage = async (req, res) => {
         console.log(error)
         res.status(500).send({
             success: false,
-            message: "Error in get job category by id",
+            message: "Error in get single language by id",
             error
         })
     }
 }
 
-//create stud4ent || post
+//create languages || post
 const createLanguage = async (req, res) => {
     try {
         const { title, createdBy } = req.body
@@ -97,6 +97,7 @@ const createLanguage = async (req, res) => {
     }
 }
 
+//update languages //put
 const updateLanguage = async (req, res) => {
     try {
         const id = req.params.id;
@@ -121,7 +122,7 @@ const updateLanguage = async (req, res) => {
 
         res.status(200).send({
             success: true,
-            message: "skill updated successfully"
+            message: "language updated successfully"
         })
 
     } catch (error) {
@@ -134,6 +135,7 @@ const updateLanguage = async (req, res) => {
     }
 }
 
+//delete language //patch
 const deleteLanguage = async (req, res) => {
     try {
         const id = req.params.id;
@@ -176,12 +178,11 @@ const deleteLanguage = async (req, res) => {
         console.log(error)
         res.status(500).send({
             success: false,
-            message: "Error in delete skill",
+            message: "Error in delete language",
             error
         })
     }
 }
-
 
 module.exports = {
     createLanguage,

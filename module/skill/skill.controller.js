@@ -1,6 +1,6 @@
 const db = require("../../config/db")
 
-//get all job categories
+//get all skills // get
 const getAllSkill = async (req, res) => {
     try {
         const data = await db.query("SELECT * FROM skill");
@@ -27,14 +27,14 @@ const getAllSkill = async (req, res) => {
     }
 }
 
-//get single job category
+//get single skill //get
 const getSingleSkill = async (req, res) => {
     try {
         const id = req.params.id
         if (!id) {
             return res.status(404).send({
                 success: false,
-                message: "Invalid provide job category id"
+                message: "Invalid provide skill id"
             })
         }
 
@@ -55,13 +55,13 @@ const getSingleSkill = async (req, res) => {
         console.log(error)
         res.status(500).send({
             success: false,
-            message: "Error in get job category by id",
+            message: "Error in get skill by id",
             error
         })
     }
 }
 
-//create stud4ent || post
+//create a skill || post
 const createSkill = async (req, res) => {
     try {
         const { title, createdBy } = req.body
@@ -97,6 +97,7 @@ const createSkill = async (req, res) => {
     }
 }
 
+//update a skill // put
 const updateSkill = async (req, res) => {
     try {
         const id = req.params.id;
@@ -134,6 +135,7 @@ const updateSkill = async (req, res) => {
     }
 }
 
+//delete a skill //patch
 const deleteSkill = async (req, res) => {
     try {
         const id = req.params.id;

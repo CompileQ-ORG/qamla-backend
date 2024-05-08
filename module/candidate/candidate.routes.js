@@ -4,7 +4,6 @@ const { createCandidate, updateCandidate, getAllCandidate, getSingleCandidate, d
 //router object
 const router = express.Router();
 
-//all routes here
 
 //get all candidate //get
 router.get('/', getAllCandidate)
@@ -15,10 +14,10 @@ router.get('/:id', getSingleCandidate)
 //create candidate || post
 router.post('/createcandidate', createCandidate);
 
-//update skill || put
+//update candidate || put
 router.put('/:id', updateCandidate);
 
-//delete user || patch
+//delete candidate || patch
 router.patch('/:id', deleteCandidate);
 
 //registration of a candidate //post
@@ -26,7 +25,6 @@ router.post('/registration', createCandidate)
 
 //login of a candidate //post
 router.post('/login', login)
-
 
 
 module.exports = router;

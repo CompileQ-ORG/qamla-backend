@@ -12,10 +12,10 @@ router.get('/', getAllUser)
 //get single user by id || get
 router.get('/:id', getSingleUser)
 
-//create category || post
+//create user || post
 router.post('/createuser', createUser);
 
-//update skill || put
+//update user || put
 router.put('/:id', updateUser);
 
 //delete user || patch

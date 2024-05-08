@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt');
 const saltRounds = 10;
 const db = require("../../config/db")
 
-//get all job categories
+//get all employers
 const getAllEmployers = async (req, res) => {
     try {
         const data = await db.query("SELECT * FROM employer");
@@ -16,7 +16,7 @@ const getAllEmployers = async (req, res) => {
         }
         res.status(200).send({
             success: true,
-            message: 'All job category Records',
+            message: 'All employers Records',
             totalEmployer: data[0].length,
             data: data[0]
         })
@@ -30,7 +30,7 @@ const getAllEmployers = async (req, res) => {
     }
 }
 
-//get single job category
+//get single job employers //get
 const getSingleEmployer = async (req, res) => {
     try {
         const id = req.params.id;
@@ -65,7 +65,7 @@ const getSingleEmployer = async (req, res) => {
     }
 }
 
-//create stud4ent || post
+//create employers || post
 const createEmployer = async (req, res) => {
     try {
         const {
@@ -82,8 +82,6 @@ const createEmployer = async (req, res) => {
             companyCountry, isDeleted, createdBy
         } = req.body
 
-        // res.json('hellloooo!!')
-        // res.json(req.body)
 
         if (!firstName || !lastName || !email || !password) {
             return res.status(500).send({
@@ -148,7 +146,7 @@ const createEmployer = async (req, res) => {
     }
 }
 
-
+//update employers //put
 const updateEmployer = async (req, res) => {
 
     const id = req.params.id;
@@ -224,6 +222,7 @@ const updateEmployer = async (req, res) => {
     }
 }
 
+//delete employers //patch
 const deleteEmployer = async (req, res) => {
     try {
         const id = req.params.id;
