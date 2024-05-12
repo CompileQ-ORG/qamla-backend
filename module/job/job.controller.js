@@ -14,7 +14,7 @@ const getAllJobs = async (req, res) => {
         res.status(200).send({
             success: true,
             message: 'All jobs Records',
-            totalSkills: data[0].length,
+            allJobsLength: data[0].length,
             data: data[0]
         })
     } catch (error) {
@@ -31,6 +31,7 @@ const getAllJobs = async (req, res) => {
 const getSingleJob = async (req, res) => {
     try {
         const id = req.params.id
+
         if (!id) {
             return res.status(404).send({
                 success: false,
@@ -49,7 +50,7 @@ const getSingleJob = async (req, res) => {
 
         res.status(200).send({
             success: true,
-            jobCategoryDetails: data[0]
+            singleJob: data[0]
         })
     } catch (error) {
         console.log(error)

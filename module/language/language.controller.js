@@ -11,10 +11,11 @@ const getAllLanguage = async (req, res) => {
                 message: 'No Records found'
             })
         }
+
         res.status(200).send({
             success: true,
             message: 'All language Records',
-            totalSkills: data[0].length,
+            totalLanguageLength: data[0].length,
             data: data[0]
         })
     } catch (error) {
@@ -49,7 +50,7 @@ const getSingleLanguage = async (req, res) => {
 
         res.status(200).send({
             success: true,
-            jobCategoryDetails: data[0]
+            singleLanguageDetails: data[0]
         })
     } catch (error) {
         console.log(error)

@@ -49,7 +49,7 @@ const getSingleJobCategory = async (req, res) => {
 
         res.status(200).send({
             success: true,
-            jobCategoryDetails: data[0]
+            singleJobCategoryDetails: data[0]
         })
     } catch (error) {
         console.log(error)

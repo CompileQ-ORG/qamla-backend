@@ -15,7 +15,7 @@ const getAllCourse = async (req, res) => {
             success: true,
             message: 'All training and certifications Records',
             totalSkills: data[0].length,
-            data: data[0]
+            allCourseOrCertification: data[0]
         })
     } catch (error) {
         console.log(error)
@@ -49,7 +49,7 @@ const getSingleCourse = async (req, res) => {
 
         res.status(200).send({
             success: true,
-            jobCategoryDetails: data[0]
+            singleCourse: data[0]
         })
     } catch (error) {
         console.log(error)

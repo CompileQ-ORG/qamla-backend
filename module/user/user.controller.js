@@ -15,7 +15,7 @@ const getAllUser = async (req, res) => {
         res.status(200).send({
             success: true,
             message: 'All user Records',
-            totalSkills: data[0].length,
+            totalUsers: data[0].length,
             data: data[0]
         })
 
@@ -51,7 +51,7 @@ const getSingleUser = async (req, res) => {
 
         res.status(200).send({
             success: true,
-            jobCategoryDetails: data[0]
+            singleUserDetails: data[0]
         })
     } catch (error) {
         console.log(error)

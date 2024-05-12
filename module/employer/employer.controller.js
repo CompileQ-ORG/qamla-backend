@@ -53,7 +53,7 @@ const getSingleEmployer = async (req, res) => {
 
         res.status(200).send({
             success: true,
-            employerDetails: data[0]
+            singleEmployer: data[0]
         })
     } catch (error) {
         console.log(error)

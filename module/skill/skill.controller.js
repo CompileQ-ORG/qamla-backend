@@ -49,7 +49,7 @@ const getSingleSkill = async (req, res) => {
 
         res.status(200).send({
             success: true,
-            jobCategoryDetails: data[0]
+            singleSkillDetails: data[0]
         })
     } catch (error) {
         console.log(error)

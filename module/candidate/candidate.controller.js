@@ -16,7 +16,7 @@ const getAllCandidate = async (req, res) => {
         res.status(200).send({
             success: true,
             message: 'All candidate Records',
-            totalSkills: data[0].length,
+            totalCandidate: data[0].length,
             data: data[0]
         })
     } catch (error) {
@@ -51,7 +51,7 @@ const getSingleCandidate = async (req, res) => {
 
         res.status(200).send({
             success: true,
-            jobCategoryDetails: data[0]
+            candidate: data[0]
         })
     } catch (error) {
         console.log(error)
