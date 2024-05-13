@@ -1,4 +1,5 @@
 const express = require("express");
+var cors = require('cors')
 const colors = require("colors");
 const morgan = require("morgan");
 const dotenv = require("dotenv");
@@ -9,6 +10,7 @@ dotenv.config()
 
 //rest object
 const app = express();
+app.use(cors())
 
 //middlewares
 app.use(express.json())
